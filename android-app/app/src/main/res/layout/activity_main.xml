@@ -234,15 +234,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- ── Botón: fecha/hora ── -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/testBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="Enviar Fecha / hora"
-                    android:textSize="14sp"
-                    app:cornerRadius="28dp"
-                    android:layout_marginBottom="12dp" />
+
 
                 <!-- ── Botón: notificaciones actuales ── -->
                 <com.google.android.material.button.MaterialButton
@@ -273,6 +265,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:text="Animación pantalla"
+                    android:textSize="14sp"
+                    app:cornerRadius="28dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- ── Botón: historial WhatsApp ── -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/whatsappHistoryBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Historial de WhatsApp"
                     android:textSize="14sp"
                     app:cornerRadius="28dp"
                     android:layout_marginBottom="12dp" />

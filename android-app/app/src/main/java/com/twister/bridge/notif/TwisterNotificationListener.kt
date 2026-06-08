@@ -90,6 +90,13 @@ class TwisterNotificationListener : NotificationListenerService() {
 
         Log.i("TwisterNotif", "Notif [${sbn.packageName}] title=$title text=$text")
 
+        if (source == TwisterNotifSource.WHATSAPP) {
+            val db = com.twister.bridge.db.TwisterDbHelper.getInstance(applicationContext)
+            Thread {
+                db.insertNotification(title, text)
+            }.start()
+        }
+
         val intent = Intent(TwisterForegroundService.ACTION_FORWARD_NOTIF)
             .setPackage(packageName)
             .putExtra(TwisterForegroundService.EXTRA_NOTIF_SOURCE, source.raw.toInt())

@@ -238,11 +238,21 @@ class BleLinkManager(private val context: Context) {
             rxChar = g.getService(SVC_UUID)?.getCharacteristic(CHAR_RX_UUID)
             if (rxChar != null) {
                 Log.i(TAG, "Listo para enviar frames al ESP32")
+                
+                // Guardar la MAC y el nombre del dispositivo conectado como el último usado
+                val deviceName = g.device.name ?: DEVICE_NAME
+                val deviceMac = g.device.address
+                prefs.edit()
+                    .putString(PREF_MAC, deviceMac)
+                    .putString(PREF_DEVICE_NAME, deviceName)
+                    .apply()
+
                 broadcastBleState(true)
                 drainQueue()
             } else {
                 Log.e(TAG, "Caracteristica RX no encontrada. SVC_UUID=$SVC_UUID buscado en: $services")
-                prefs.edit().remove(PREF_MAC).apply()
+                // Desconectar para forzar reintento sin borrar la MAC guardada
+                g.disconnect()
             }
         }
 

@@ -36,6 +36,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".HistoryActivity"
+            android:exported="false"
+            android:label="Historial" />
+
         <service
             android:name=".service.TwisterForegroundService"
             android:enabled="true"

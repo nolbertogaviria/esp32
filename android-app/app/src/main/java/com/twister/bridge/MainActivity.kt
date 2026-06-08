@@ -90,7 +90,9 @@ class MainActivity : AppCompatActivity() {
         swipeRefresh.setProgressBackgroundColorSchemeColor(0xFF1A1A1A.toInt())
 
         findViewById<MaterialButton>(R.id.selectDeviceBtn).setOnClickListener { showDevicePicker() }
-        findViewById<MaterialButton>(R.id.testBtn).setOnClickListener { sendTestNotif() }
+        findViewById<MaterialButton>(R.id.whatsappHistoryBtn).setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
         findViewById<MaterialButton>(R.id.sendActiveNotifsBtn).setOnClickListener { sendActiveNotifs() }
         findViewById<MaterialButton>(R.id.simulateGpsBtn).setOnClickListener { simulateGps() }
         findViewById<MaterialButton>(R.id.splashBtn).setOnClickListener { sendSplash() }
@@ -192,10 +194,6 @@ class MainActivity : AppCompatActivity() {
     private fun startTwisterService() {
         startForegroundService(Intent(this, TwisterForegroundService::class.java))
         updateStatus()
-    }
-
-    private fun sendTestNotif() {
-        sendBroadcast(Intent(TwisterForegroundService.ACTION_TEST_NOTIF).setPackage(packageName))
     }
 
     private fun sendActiveNotifs() {
