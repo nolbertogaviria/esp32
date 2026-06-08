@@ -4,13 +4,16 @@ enum class TwisterMessageType(val raw: UByte) {
     TURN(0x01u),
     NOTIF(0x02u),
     HEARTBEAT(0x03u),
-    STATUS(0x04u)
+    STATUS(0x04u),
+    CMD(0x05u),
+    GPS_RAW(0x06u)
 }
 
 enum class TwisterNotifSource(val raw: UByte) {
     CALL(0u),
     WHATSAPP(1u),
-    TELEGRAM(2u);
+    TELEGRAM(2u),
+    SYSTEM(3u);
 
     companion object {
         fun fromRaw(value: Int): TwisterNotifSource {
@@ -36,16 +39,17 @@ object TwisterProtocol {
         return output
     }
 
-    fun buildTurnPayload(direction: Int, distanceM: Int, roadName: String): ByteArray {
+    fun buildTurnPayload(direction: Int, distanceM: Int, roadName: String, exitNumber: Int = 0): ByteArray {
         val safeRoad = roadName.trim().take(MAX_ROAD_NAME).encodeToByteArray()
         val safeDistance = distanceM.coerceIn(0, 65535)
-        val output = ByteArray(4 + safeRoad.size)
+        val output = ByteArray(5 + safeRoad.size)
 
-        output[0] = direction.coerceIn(0, 5).toByte()
+        output[0] = direction.coerceIn(0, 6).toByte()   // 6 = ROUNDABOUT
         output[1] = (safeDistance and 0xFF).toByte()
         output[2] = ((safeDistance shr 8) and 0xFF).toByte()
-        output[3] = safeRoad.size.toByte()
-        safeRoad.copyInto(output, destinationOffset = 4)
+        output[3] = exitNumber.coerceIn(0, 9).toByte()
+        output[4] = safeRoad.size.toByte()
+        safeRoad.copyInto(output, destinationOffset = 5)
 
         return output
     }
@@ -75,6 +79,11 @@ object TwisterProtocol {
         output[4] = flags.toByte()
         return output
     }
+
+    fun buildCmdPayload(cmdId: Byte): ByteArray = byteArrayOf(cmdId)
+
+    fun buildGpsRawPayload(text: String): ByteArray =
+        text.trim().take(80).encodeToByteArray()
 
     private fun crc8Xor(data: ByteArray, len: Int): UByte {
         var crc = 0

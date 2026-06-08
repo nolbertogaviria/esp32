@@ -27,6 +27,12 @@ android {
         }
     }
 
+    buildFeatures {
+        // AGP versions can disable AIDL generation by default.
+        // Required for src/main/aidl/net/osmand/... stubs used by OsmAndNavigationBridge.
+        aidl = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -42,4 +48,5 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.activity:activity-ktx:1.9.2")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

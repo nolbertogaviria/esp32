@@ -1,0 +1,39 @@
+# Root .gitignore for Twister Project (Android + ESP32 C6)
+
+# --- Android / Gradle ---
+.gradle/
+local.properties
+.idea/
+*.iml
+.DS_Store
+build/
+**/build/
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aar
+
+# --- ESP-IDF / C / CMake ---
+sdkconfig.old
+sdkconfig.defaults.old
+dependencies.lock
+*.bin
+*.elf
+*.map
+
+# --- Arduino / Logs / Temporary Files ---
+*.log
+*.tmp
+*.bak
+*.swp
+
+# --- OS / VS Code / Editors ---
+.vscode/
+.history/
+.project
+.cproject
+.settings/
+Thumbs.db
+desktop.ini
